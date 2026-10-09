@@ -12,3 +12,5 @@ A provider-neutral, spec-driven development scaffold for Yorkstead projects.
 6. Update `docs/handoffs/CURRENT.md` before the first implementation session.
 
 Run `bun run yorkstead:check` after the project package manager and scripts are configured.
+
+See `docs/instructions/` for new-project and existing-project migration guidance, and `docs/model-routing.md` for provider/model selection.
