@@ -1,0 +1,7 @@
+{
+  "name": "yorkstead-project-template",
+  "private": true,
+  "scripts": {
+    "yorkstead:check": "node scripts/yorkstead-check.mjs"
+  }
+}
