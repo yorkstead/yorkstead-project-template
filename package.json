@@ -2,6 +2,8 @@
   "name": "yorkstead-project-template",
   "private": true,
   "scripts": {
-    "yorkstead:check": "node scripts/yorkstead-check.mjs"
+    "yorkstead:check": "node scripts/yorkstead-check.mjs",
+    "yorkstead:init": "node scripts/yorkstead-init.mjs",
+    "test": "node --test tests/*.test.mjs"
   }
 }

@@ -1,12 +1,10 @@
-# Verification commands
+# Verification
 
-Replace these placeholders during project bootstrap:
+Use Node.js 24. The canonical contract has no install-time dependencies.
 
-```text
-format/lint: <command>
-typecheck: <command>
-test: <command>
-build: <command>
-```
+| Check | Command | Required |
+| --- | --- | --- |
+| Scaffold | `npm run yorkstead:check` | Yes |
+| Initializer and validator regression tests | `npm test` | Yes |
 
-Record the commands in `package.json`, CI, and the project profile. Do not mark a check as passing without evidence.
+There is no application in this repository: application lint, typecheck, build, runtime, and release checks belong to each starter. Do not replace them with passing placeholder scripts. Downstream projects document their real commands here.

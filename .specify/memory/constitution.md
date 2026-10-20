@@ -1,6 +1,6 @@
 # Yorkstead Engineering Constitution
 
-**Version:** 1.0.0 | **Ratified:** 2026-10-06
+**Version:** 1.1.0 | **Ratified:** 2026-10-20
 
 ## Principles
 
@@ -8,7 +8,7 @@
 Every material product change begins with a specification covering user value, boundaries, acceptance criteria, and non-goals.
 
 ### II. Preserve existing behavior
-Rework Flow work preserves current architecture and behavior unless the active specification explicitly authorizes a change. Prefer additive, reversible changes.
+Project work preserves current architecture and behavior unless the active specification explicitly authorizes a change. Prefer additive, reversible changes.
 
 ### III. Verification is part of the change
 No task is complete until relevant checks pass and the agent records what was verified, what was not, and why.

@@ -1,20 +1,17 @@
 name: Verify
-
 on:
   pull_request:
   push:
     branches: [main]
-
+permissions:
+  contents: read
 jobs:
-  verify:
+  contract:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install Bun
-        uses: oven-sh/setup-bun@v2
-      - name: Install dependencies
-        run: bun install
-      - name: Yorkstead preflight
-        run: bun run yorkstead:check
-      # Add project-specific lint, typecheck, test, and build steps after bootstrap.
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm run yorkstead:check
+      - run: npm test

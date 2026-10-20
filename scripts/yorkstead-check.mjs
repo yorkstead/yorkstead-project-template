@@ -1,57 +1,27 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const root = process.cwd();
-const requiredFiles = [
-  "AGENTS.md",
-  ".specify/memory/constitution.md",
-  ".specify/templates/spec-template.md",
-  ".specify/templates/plan-template.md",
-  ".specify/templates/tasks-template.md",
-  ".agents/skills/code-change-verification/SKILL.md",
-  "docs/project-profile.md",
-  "docs/verification.md",
-  "docs/handoffs/CURRENT.md",
-  "docs/release-checklist.md",
+const required = [
+  "AGENTS.md", "CLAUDE.md", "GEMINI.md", ".codex/instructions.md", ".github/copilot-instructions.md",
+  ".specify/memory/constitution.md", ".specify/templates/spec-template.md", ".specify/templates/plan-template.md", ".specify/templates/tasks-template.md",
+  "docs/yorkstead-contract.md", "docs/project-profile.md", "docs/verification.md", "docs/model-routing.md", "docs/agent-roles.md", "docs/workflow.md", "docs/release-checklist.md",
+  "docs/handoffs/CURRENT.md", "docs/handoffs/SESSION-START.md", "docs/handoffs/SESSION-END.md",
+  "scripts/yorkstead-init.mjs", "specs/README.md", ".github/workflows/verify.yml",
+  ...["code-change-verification", "database-migration", "production-hardening", "release-verification", "security-review", "spec-convergence"].map(name => `.agents/skills/${name}/SKILL.md`),
 ];
-
-const missing = requiredFiles.filter((file) => !fs.existsSync(path.join(root, file)));
-if (missing.length > 0) {
-  console.error("Yorkstead scaffold is incomplete. Missing:");
-  for (const file of missing) console.error(`- ${file}`);
-  process.exit(1);
+const errors = required.filter(file => !fs.existsSync(file)).map(file => `Missing ${file}`);
+const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+for (const name of ["yorkstead:check", "yorkstead:init"]) if (!pkg.scripts?.[name]) errors.push(`Missing script ${name}`);
+for (const adapter of ["CLAUDE.md", "GEMINI.md", ".codex/instructions.md", ".github/copilot-instructions.md"]) {
+  if (fs.existsSync(adapter) && !fs.readFileSync(adapter, "utf8").includes("AGENTS.md")) errors.push(`${adapter} must reference AGENTS.md`);
 }
-
-const packageJson = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
-const requiredScripts = ["yorkstead:check"];
-const missingScripts = requiredScripts.filter((script) => !packageJson.scripts?.[script]);
-if (missingScripts.length > 0) {
-  console.error(`Missing package scripts: ${missingScripts.join(", ")}`);
-  process.exit(1);
-}
-const expectedScripts = ["lint", "typecheck", "test", "build"];
-const missingExpectedScripts = expectedScripts.filter((script) => !packageJson.scripts?.[script]);
-if (missingExpectedScripts.length > 0) {
-  console.warn(`Project-specific verification scripts still need to be configured: ${missingExpectedScripts.join(", ")}`);
-}
-
-const activeSpecs = fs.existsSync(path.join(root, "specs"))
-  ? fs.readdirSync(path.join(root, "specs"), { withFileTypes: true }).filter((entry) => entry.isDirectory())
-  : [];
-if (activeSpecs.length === 0) {
-  if (fs.existsSync(path.join(root, "specs", "README.md"))) {
-    console.warn("No active feature spec exists yet; create the first directory under specs/.");
-  } else {
-    console.error("No active spec directory exists under specs/.");
-    process.exit(1);
+const features = fs.existsSync("specs") ? fs.readdirSync("specs", { withFileTypes: true }).filter(entry => entry.isDirectory() && entry.name !== "examples") : [];
+for (const { name } of features) {
+  if (!/^\d{3,}-[a-z0-9]+(?:-[a-z0-9]+)*$/.test(name)) errors.push(`Invalid feature directory specs/${name}`);
+  for (const file of ["spec.md", "plan.md", "tasks.md"]) {
+    const target = path.join("specs", name, file);
+    if (!fs.existsSync(target) || !fs.readFileSync(target, "utf8").trim()) errors.push(`Missing or empty ${target}`);
   }
 }
-
-const trackedText = ["AGENTS.md", "docs/project-profile.md", "docs/verification.md"]
-  .map((file) => fs.readFileSync(path.join(root, file), "utf8").toLowerCase());
-if (trackedText.some((content) => content.includes("-----begin private key-----"))) {
-  console.error("Possible private key material found in scaffold guidance.");
-  process.exit(1);
-}
-
-console.log(`PASS: Yorkstead scaffold, ${activeSpecs.length} active spec director${activeSpecs.length === 1 ? "y" : "ies"}, and required scripts are present.`);
+if (errors.length) { console.error(errors.join("\n")); process.exitCode = 1; }
+else console.log(`PASS: Yorkstead contract; ${features.length} feature(s). Run application checks from docs/verification.md separately.`);

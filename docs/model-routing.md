@@ -6,14 +6,14 @@ The Yorkstead scaffold does not automatically switch models. `AGENTS.md`, the co
 
 ## Route by job
 
-| Job | Recommended primary | Use another provider for |
+| Job | Recommended primary | Use an independent reviewer for |
 |---|---|---|
 | Clarify a requirement or design a feature | ChatGPT/Codex | independent review |
 | Explore an unfamiliar repository | Gemini CLI or Codex | second-opinion architecture review |
 | Implement a focused change | Codex, Claude Code, or Gemini CLI | independent tests/review |
 | Large refactor or careful code review | Claude Code or Codex | an independent provider’s risk review |
 | GitHub issue, PR, CI, or small inline edit | GitHub Copilot | architecture or security decisions |
-| Security, migration, or release review | A provider different from the implementer | human approval for high-risk actions |
+| Security, migration, or release review | An independent reviewer | human approval for high-risk actions |
 
 These are defaults, not hard dependencies. Prefer the agent with the best repository context and tool access for the current task.
 

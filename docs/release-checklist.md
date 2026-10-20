@@ -1,13 +1,11 @@
 # Release checklist
 
-- [ ] Active spec, plan, and tasks are synchronized.
-- [ ] `bun run yorkstead:check` passes.
-- [ ] `bun run lint` passes; warnings are recorded.
-- [ ] `bun run typecheck` passes.
-- [ ] `bun test tests` passes.
-- [ ] `bun run build` passes.
-- [ ] Environment variables are confirmed without exposing values.
-- [ ] Database/migration status is known when applicable.
-- [ ] Preview deployment and smoke walkthrough are complete.
-- [ ] Rollback trigger and recovery path are documented.
-- [ ] `docs/handoffs/CURRENT.md` points to the next exact action.
+- [ ] Active spec, plan, tasks and handoff agree.
+- [ ] Run `yorkstead:check` through the project's package manager.
+- [ ] Run every required command in `docs/verification.md`; record failures, skips and manual checks separately.
+- [ ] Review security and data boundaries; obtain independent review for substantial or high-risk work.
+- [ ] Confirm environment requirements without exposing values.
+- [ ] Where applicable, record database migration status and recovery limits.
+- [ ] Record platform smoke checks: web/auth/commerce or native Android/iOS as appropriate.
+- [ ] Document release authorization, rollback trigger and recovery path. Do not deploy without authorization.
+- [ ] Point `docs/handoffs/CURRENT.md` to the next exact action.

@@ -9,7 +9,7 @@ Use this instruction when creating a new system, tool, application, or service.
 3. Complete `docs/project-profile.md`.
 4. Replace the placeholders in `docs/verification.md` with real commands.
 5. Add the real `lint`, `typecheck`, `test`, and `build` scripts when applicable.
-6. Run `bun run yorkstead:check` or the equivalent package-manager command.
+6. Run `npm run yorkstead:check` or the equivalent package-manager command.
 7. Create `specs/001-first-slice/spec.md`, `plan.md`, and `tasks.md`.
 
 ## First agent assignment
