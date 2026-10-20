@@ -9,3 +9,5 @@
 See docs/handoffs/CURRENT.md for the current task, verification, next action and blockers.
 
 T003 is complete as a local verification/review task; the evidence explicitly records external blockers and security findings rather than claiming a production release. T004 remains open until review/merge and mobile repository/template administration are resolved.
+
+Existing repository delivery: implementation branch pushed and PR #1 opened; GitHub Actions verification passed. Review/merge and application template-flag administration remain owner actions.
